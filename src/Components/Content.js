@@ -6,24 +6,30 @@ import WeatherDetails from "./WeatherDetails";
 import Home from "./Home";
 import { Switch, Route } from "react-router-dom";
 
-export default function Content() {
+export default function Content({currentUser, page, onLoginSubmit, onForgotPasswordClick, onNewUserClick}) {
     return (
         <div>
             <Switch>
                 <Route path="/myinfo/:id">
-                    <MyInfo />
+                    <MyInfo currentUser={currentUser} page={page} />
                 </Route>
                 <Route path="/vacationdetails/:userId/:id">
-                    <VacationDetails />
+                    <VacationDetails currentUser={currentUser} page={page} />
                 </Route>
                 <Route path="/vacationcalendar/">
-                    <VacationCalendar />
+                    <VacationCalendar currentUser={currentUser} page={page} />
                 </Route>
                 <Route path="/weather/:userId/:id">
-                    <WeatherDetails />
+                    <WeatherDetails currentUser={currentUser} page={page} />
                 </Route>
                 <Route exact path="/">
-                    <Home />
+                    <Home 
+                        currentUser={currentUser}
+                        page={page}
+                        onLoginSubmit={onLoginSubmit}
+                        onForgotPasswordClick={onForgotPasswordClick}
+                        onNewUserClick={onNewUserClick}
+                    />
                 </Route>
                 <Route path="*">
                     <h1>404 not found</h1>
