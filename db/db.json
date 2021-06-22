@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "smsguy927",
+      "password" : "Abc+123"
+    }
+  ],
+  "vacations" : [
+    {
+      "id" : 1,
+      "userId" : 1,
+      "startDate" : "10/1/2021",
+      "endDate" : "10/8/2021",
+      "city" : "Los Angeles, CA" 
+
+    }
+  ]
+}
