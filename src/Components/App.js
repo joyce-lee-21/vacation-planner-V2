@@ -8,6 +8,7 @@ import VacationCalendar from "./VacationDetails";
 import WeatherDetails from "./VacationDetails";
 import Home from "./Home";
 import Header from "./Header";
+import Content from "./Content";
 
 const USERS_API = "http://localhost:3000/users";
 const VACATIONS_API = "http://localhost:3000/vacations";
@@ -65,6 +66,7 @@ function App() {
     <div className="App">
       <Header></Header>
       <NavBar onChangePage={setPage} />
+      <Content />
       <Switch>
         <Route path="/MyInfo">
           <MyInfo currentUser={xyz} page={page} />
