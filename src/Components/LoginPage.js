@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import ForgotPasswordForm from "./ForgotPasswordForm";
+import NewUserForm from "./NewUserForm";
 
 export default function LoginPage({
-  onForgotPasswordClick,
+  onForgotPasswordSubmit,
   onNewUserClick,
   onLoginSubmit
 }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [forgotPasswordForm, toggleForgotPasswordForm] = useState(false);
 
   function handleUserNameChange(event) {
     setUserName(event.target.value);
@@ -15,6 +18,13 @@ export default function LoginPage({
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
+
+  function handleForgotPasswordClick() {
+    toggleForgotPasswordForm(true);
+  }
+
+  function handleNewUserClick() {}
+
   return (
     <div>
       <h2>Login</h2>
@@ -36,8 +46,11 @@ export default function LoginPage({
         <br />
         <button type="submit">Submit</button>
       </form>
-      <button onClick={onForgotPasswordClick}>Forgot Password?</button>
+      <button onClick={handleForgotPasswordClick}>Forgot Password?</button>
       <button onClick={onNewUserClick}>New User</button>
+      {forgotPasswordForm && (
+        <ForgotPasswordForm onForgotPasswordSubmit={onForgotPasswordSubmit} />
+      )}
     </div>
   );
 }

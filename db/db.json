@@ -3,28 +3,33 @@
     {
       "id": 1,
       "userName": "smsguy927",
-      "password" : "Abc+123"
+      "password" : "Abc+123",
+      "favoriteCity" : "New York City"
     },
     {
       "id": 2,
 
       "userName": "johndoe123",
-      "password" : "xyZ999*"
+      "password" : "xyZ999*",
+      "favoriteCity" : "New York City"
     },
     {
       "id": 3,
       "userName": "TommyTutone",
-      "password" : "Jenny867-5309"
+      "password" : "Jenny867-5309",
+      "favoriteCity" : "New York City"
     },
     {
       "id": 4,
       "userName": "Alice555",
-      "password" : "xyZ999*"
+      "password" : "xyZ999*",
+      "favoriteCity" : "New York City"
     },
     {
       "id": 5,
       "userName": "Barbara999",
-      "password" : "xyz-123"
+      "password" : "xyz-123",
+      "favoriteCity" : "New York City"
     }
   ],
   "vacations" : [

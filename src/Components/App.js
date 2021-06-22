@@ -14,7 +14,7 @@ const VACATIONS_API = "http://localhost:3000/vacations";
 
 function App() {
   const [page, setPage] = useState("/");
-  const [xyz, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [allVacations, setAllVacations] = useState([]);
 
@@ -36,12 +36,31 @@ function App() {
       : alert("Username not found. Please Try Again or click new user button.");
     //let currentUser;
     //setUser(currentUser);
-    console.log(xyz);
   }
 
-  function handleForgotPasswordClick() {}
+  function handleForgotPasswordSubmit(event) {
+    event.preventDefault();
+    console.log(allUsers);
+    console.log(event.target.userName.value);
+    console.log(event.target.favoriteCity.value);
+    let currentUserName = event.target.userName.value;
+    let currentFavCity = event.target.favoriteCity.value;
+    let foundUserWithFavCity = allUsers.find(
+      (user) =>
+        user.userName === currentUserName &&
+        user.favoriteCity === currentFavCity
+    );
+    let foundUser = allUsers.find((user) => user.userName === currentUserName);
+    foundUserWithFavCity
+      ? alert(`Your password is ${foundUserWithFavCity.password}`)
+      : foundUser
+      ? alert("Wrong Favorite City. Please Try Again.")
+      : alert("Username not found. Please Try Again or click new user button.");
+    //let currentUser;
+    //setUser(currentUser);
+  }
 
-  function handleNewUserClick() {}
+  function handleAddUser() {}
 
   function loadUsers() {
     fetch(USERS_API)
@@ -67,24 +86,24 @@ function App() {
       <NavBar onChangePage={setPage} />
       <Switch>
         <Route path="/MyInfo">
-          <MyInfo currentUser={xyz} page={page} />
+          <MyInfo currentUser={currentUser} page={page} />
         </Route>
         <Route path="/VacationDetails">
-          <VacationDetails currentUser={xyz} page={page} />
+          <VacationDetails currentUser={currentUser} page={page} />
         </Route>
         <Route path="/VacationCalendar">
-          <VacationCalendar currentUser={xyz} page={page} />
+          <VacationCalendar currentUser={currentUser} page={page} />
         </Route>
         <Route path="/WeatherDetails">
-          <WeatherDetails currentUser={xyz} page={page} />
+          <WeatherDetails currentUser={currentUser} page={page} />
         </Route>
         <Route exact path="/">
           <Home
-            currentUser={xyz}
+            currentUser={currentUser}
             page={page}
             onLoginSubmit={handleLoginSubmit}
-            onForgotPasswordClick={handleForgotPasswordClick}
-            onNewUserClick={handleNewUserClick}
+            onForgotPasswordSubmit={handleForgotPasswordSubmit}
+            onAddUser={handleAddUser}
           />
         </Route>
         <Route path="*">
