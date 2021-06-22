@@ -18,6 +18,13 @@
       "startDate" : "10/1/2021",
       "endDate" : "10/8/2021",
       "city" : "Los Angeles, CA" 
+    },
+    {
+      "id" : 1,
+      "userId" : 2,
+      "startDate" : "11/1/2021",
+      "endDate" : "11/8/2021",
+      "city" : "Honolulu, HI" 
     }
   ]
 }
