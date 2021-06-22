@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
-import "./App.css";
-import MyInfo from "./MyInfo";
-import VacationDetails from "./VacationDetails";
-import VacationCalendar from "./VacationDetails";
-import WeatherDetails from "./VacationDetails";
-import Home from "./Home";
+import "../App.css";
 import Header from "./Header";
+import Content from "./Content";
 
 function App() {
   const [page, setPage] = useState("/");
@@ -16,26 +11,7 @@ function App() {
     <div className="App">
       <Header></Header>
       <NavBar onChangePage={setPage} />
-      <Switch>
-        <Route path="/MyInfo">
-          <MyInfo />
-        </Route>
-        <Route path="/VacationDetails">
-          <VacationDetails />
-        </Route>
-        <Route path="/VacationCalendar">
-          <VacationCalendar />
-        </Route>
-        <Route path="/WeatherDetails">
-          <WeatherDetails />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="*">
-          <h1>404 not found</h1>
-        </Route>
-      </Switch>
+      <Content />
     </div>
   );
 }
