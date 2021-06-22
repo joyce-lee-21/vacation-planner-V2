@@ -1,3 +1,10 @@
+/* Color Theme Swatches in Hex */
+.youth-group-vacation-travel-city-1-hex { color: #68C7BA; }
+.youth-group-vacation-travel-city-2-hex { color: #576BA7; }
+.youth-group-vacation-travel-city-3-hex { color: #F2EFC4; }
+.youth-group-vacation-travel-city-4-hex { color: #F29979; }
+.youth-group-vacation-travel-city-5-hex { color: #D95555; }
+
 .App {
   text-align: center;
 }
@@ -35,4 +42,41 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header-main {
+  height: 120px;
+  background-color: #F29979;
+}
+
+div.header-main h1 {
+  padding-top: 40px;
+}
+
+.nav-button{
+  color: #576BA7 !important;
+	text-transform: uppercase;
+	text-decoration: none;
+	background: #68C7BA;
+	padding: 10px;
+	border: 2px solid #576BA7 !important;
+}
+
+.navbar-main {
+  width: 100vw;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px black;
+}
+
+.calendar-week-row {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: ; */
+}
+
+.calendar-date-box {
+  border: 1px black;
+  width: 10px;
+  text-align: end;
 }
