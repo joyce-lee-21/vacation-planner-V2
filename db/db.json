@@ -31,12 +31,6 @@
       "favoriteCity": "New York City"
     },
     {
-      "userName": "",
-      "password": "",
-      "favoriteCity": "",
-      "id": 6
-    },
-    {
       "userName": "aaa",
       "password": "aa",
       "favoriteCity": "LA",
@@ -47,6 +41,12 @@
       "password": "bbb",
       "favoriteCity": "bbb",
       "id": 8
+    },
+    {
+      "userName": "vvv",
+      "password": "Qwe123-",
+      "favoriteCity": "CEDAR PARK",
+      "id": 9
     }
   ],
   "vacations": [

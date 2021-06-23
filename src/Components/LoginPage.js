@@ -4,7 +4,6 @@ import NewUserForm from "./NewUserForm";
 
 export default function LoginPage({
   onForgotPasswordSubmit,
-  onNewUserClick,
   onLoginSubmit,
   onIsUserNameAvailable,
   onAddUser

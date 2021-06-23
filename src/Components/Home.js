@@ -6,6 +6,7 @@ export default function Home({
   currentUser,
   page,
   onForgotPasswordSubmit,
+  allVacations,
   onNewUserClick,
   onLoginSubmit,
   onUserNameChange,
@@ -13,7 +14,9 @@ export default function Home({
   onIsUserNameAvailable,
   onAddUser
 }) {
-  const myInfo = <MyInfo currentUser={currentUser} />;
+  const myInfo = (
+    <MyInfo currentUser={currentUser} allVacations={allVacations} />
+  );
   const loginPage = (
     <LoginPage
       onUserNameChange={onUserNameChange}

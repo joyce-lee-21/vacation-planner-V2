@@ -8,26 +8,30 @@ import { Switch, Route } from "react-router-dom";
 
 export default function Content({
   currentUser,
+  allVacations,
   page,
   onLoginSubmit,
-  onForgotPasswordClick,
-  onNewUserClick,
+  onForgotPasswordSubmit,
   onIsUserNameAvailable,
   onAddUser
 }) {
   return (
     <div>
       <Switch>
-        <Route path="/myinfo/:id">
-          <MyInfo currentUser={currentUser} page={page} />
+        <Route path="/myinfo/">
+          <MyInfo
+            currentUser={currentUser}
+            page={page}
+            allVacations={allVacations}
+          />
         </Route>
-        <Route path="/vacationdetails/:userId/:id">
+        <Route path="/vacationdetails/">
           <VacationDetails currentUser={currentUser} page={page} />
         </Route>
         <Route path="/vacationcalendar/">
           <VacationCalendar currentUser={currentUser} page={page} />
         </Route>
-        <Route path="/weather/:userId/:id">
+        <Route path="/weather/">
           <WeatherDetails currentUser={currentUser} page={page} />
         </Route>
         <Route exact path="/">
@@ -35,8 +39,7 @@ export default function Content({
             currentUser={currentUser}
             page={page}
             onLoginSubmit={onLoginSubmit}
-            onForgotPasswordClick={onForgotPasswordClick}
-            onNewUserClick={onNewUserClick}
+            onForgotPasswordSubmit={onForgotPasswordSubmit}
             onIsUserNameAvailable={onIsUserNameAvailable}
             onAddUser={onAddUser}
           />
