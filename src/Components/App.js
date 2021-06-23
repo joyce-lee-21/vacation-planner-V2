@@ -15,10 +15,9 @@ function App() {
 
   function handleLoginSubmit(event) {
     event.preventDefault();
-    console.log(allUsers);
+    console.log(allVacations);
     let currentUserName = event.target.userName.value;
     let currentPassword = event.target.password.value;
-    console.log(event.target.password.value);
     let foundUserWithPassword = allUsers.find(
       (user) =>
         user.userName === currentUserName && user.password === currentPassword
@@ -35,7 +34,6 @@ function App() {
 
   function handleForgotPasswordSubmit(event) {
     event.preventDefault();
-    console.log(allUsers);
     console.log(event.target.userName.value);
     console.log(event.target.favoriteCity.value);
     let currentUserName = event.target.userName.value;
@@ -45,6 +43,7 @@ function App() {
         user.userName === currentUserName &&
         user.favoriteCity === currentFavCity
     );
+    console.log(foundUserWithFavCity);
     let foundUser = allUsers.find((user) => user.userName === currentUserName);
     foundUserWithFavCity
       ? alert(`Your password is ${foundUserWithFavCity.password}`)
@@ -87,10 +86,10 @@ function App() {
       <NavBar onChangePage={setPage} />
       <Content
         currentUser={currentUser}
+        allVacations={allVacations}
         page={page}
         onLoginSubmit={handleLoginSubmit}
-        onForgotPasswordClick={handleForgotPasswordSubmit}
-        onNewUserClick={handleAddUser}
+        onForgotPasswordSubmit={handleForgotPasswordSubmit}
         onIsUserNameAvailable={isUserNameAvailable}
         onAddUser={handleAddUser}
       />

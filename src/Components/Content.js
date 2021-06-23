@@ -8,10 +8,10 @@ import { Switch, Route } from "react-router-dom";
 
 export default function Content({
   currentUser,
+  allVacations,
   page,
   onLoginSubmit,
-  onForgotPasswordClick,
-  onNewUserClick,
+  onForgotPasswordSubmit,
   onIsUserNameAvailable,
   onAddUser
 }) {
@@ -19,7 +19,7 @@ export default function Content({
     <div>
       <Switch>
         <Route path="/myinfo/">
-          <MyInfo currentUser={currentUser} page={page} />
+          <MyInfo currentUser={currentUser} page={page}  allVacations={allVacations} />
         </Route>
         <Route path="/vacationdetails/">
           <VacationDetails currentUser={currentUser} page={page} />
@@ -35,8 +35,7 @@ export default function Content({
             currentUser={currentUser}
             page={page}
             onLoginSubmit={onLoginSubmit}
-            onForgotPasswordClick={onForgotPasswordClick}
-            onNewUserClick={onNewUserClick}
+            onForgotPasswordSubmit={onForgotPasswordSubmit}
             onIsUserNameAvailable={onIsUserNameAvailable}
             onAddUser={onAddUser}
           />

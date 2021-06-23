@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import ForgotPasswordForm from "./ForgotPasswordForm";
+import ForgotPasswordForm from "./ForgotPasswordForm.js";
 import NewUserForm from "./NewUserForm";
 
 export default function LoginPage({
   onForgotPasswordSubmit,
-  onNewUserClick,
   onLoginSubmit,
   onIsUserNameAvailable,
   onAddUser
