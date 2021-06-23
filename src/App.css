@@ -71,6 +71,7 @@ div.header-main h1 {
 
 .calendar-container {
   margin: auto;
+  margin-top: 50px;
   width: 100%;
 }
 
@@ -90,4 +91,15 @@ div.header-main h1 {
 
 .Content {
   background-color: #F2EFC4;
+}
+
+.VacationDetails input{
+  display: flex
+}
+
+.vacation-details-container {
+  margin: auto;
+  margin-top: 50px;
+  width: 100%;
+
 }
