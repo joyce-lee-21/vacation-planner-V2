@@ -85,8 +85,18 @@ div.header-main h1 {
   margin-bottom: -5px;
 }
 
+.weather-icon2 {
+  width: 50px;
+  margin-bottom: -5px;
+}
+
 .temp-number {
   width: 40px;
+}
+
+.temp-number2 {
+  width: 40px;
+  vertical-align: top;
 }
 
 .Content {
