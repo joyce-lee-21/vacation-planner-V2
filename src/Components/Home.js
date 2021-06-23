@@ -9,7 +9,9 @@ export default function Home({
   onNewUserClick,
   onLoginSubmit,
   onUserNameChange,
-  onPasswordChange
+  onPasswordChange,
+  onIsUserNameAvailable,
+  onAddUser
 }) {
   const myInfo = <MyInfo currentUser={currentUser} />;
   const loginPage = (
@@ -19,6 +21,8 @@ export default function Home({
       onLoginSubmit={onLoginSubmit}
       onForgotPasswordSubmit={onForgotPasswordSubmit}
       onNewUserClick={onNewUserClick}
+      onIsUserNameAvailable={onIsUserNameAvailable}
+      onAddUser={onAddUser}
     />
   );
   const pageToDisplay = currentUser ? myInfo : loginPage;

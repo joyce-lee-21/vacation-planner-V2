@@ -55,7 +55,14 @@ function App() {
     //setUser(currentUser);
   }
 
-  function handleAddUser() {}
+  function isUserNameAvailable(newUserName) {
+    return !allUsers.find((user) => user.userName === newUserName);
+  }
+
+  function handleAddUser(newUser) {
+    const updatedUsers = [...allUsers, newUser];
+    setAllUsers(updatedUsers);
+  }
 
   function loadUsers() {
     fetch(USERS_API)
@@ -84,6 +91,8 @@ function App() {
         onLoginSubmit={handleLoginSubmit}
         onForgotPasswordClick={handleForgotPasswordSubmit}
         onNewUserClick={handleAddUser}
+        onIsUserNameAvailable={isUserNameAvailable}
+        onAddUser={handleAddUser}
       />
     </div>
   );
