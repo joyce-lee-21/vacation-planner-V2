@@ -69,14 +69,12 @@ div.header-main h1 {
   border: 1px black;
 }
 
-.calendar-week-row {
-  display: flex;
-  justify-content: center;
-  /* flex-direction: ; */
+.calendar-container {
+  margin: auto;
+  width: 100%;
 }
 
-.calendar-date-box {
-  border: 1px black;
-  width: 10px;
-  text-align: end;
+.VacationCalendar {
+  margin: auto;
+  width: 80%;
 }
