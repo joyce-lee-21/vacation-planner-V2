@@ -19,11 +19,7 @@ export default function Content({
     <div>
       <Switch>
         <Route path="/myinfo/">
-          <MyInfo
-            currentUser={currentUser}
-            page={page}
-            allVacations={allVacations}
-          />
+          <MyInfo currentUser={currentUser} page={page}  allVacations={allVacations} />
         </Route>
         <Route path="/vacationdetails/">
           <VacationDetails currentUser={currentUser} page={page} />

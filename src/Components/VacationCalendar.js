@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import { WiDaySunny } from "weather-icons-react";
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-// API Key from https://rapidapi.com/community/api/open-weather-map/
-const API_KEY = "b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64";
+  // API Key from https://rapidapi.com/community/api/open-weather-map/
+  const API_KEY = '';
 
 const useStyles = makeStyles((theme) => ({
   root: {
