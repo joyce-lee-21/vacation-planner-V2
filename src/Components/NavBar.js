@@ -8,12 +8,22 @@ export default function NavBar({ onChangePage }) {
   }
 
   return (
-    <nav>
-      <NavLink exact to="/">Home</NavLink>
-            <NavLink to="/MyInfo">My Info</NavLink>
-            <NavLink to="/VacationDetails">VacationDetails</NavLink>
-            <NavLink to="/VacationCalendar">VacationCalendar</NavLink>
-            <NavLink to="/WeatherDetails">WeatherDetails</NavLink>
-    </nav>
+    <div className="navbar-main">
+      <NavLink exact to="/">
+        <button className="nav-button">Home</button>
+      </NavLink>
+      <NavLink to="/myinfo">
+        <button className="nav-button">My Info</button>
+      </NavLink>
+      <NavLink to="/vacationdetails">
+        <button className="nav-button">Vacation Details</button>
+      </NavLink>
+      <NavLink to="/vacationcalendar">
+        <button className="nav-button">Vacation Calendar</button>
+      </NavLink>
+      <NavLink to="/weather">
+        <button className="nav-button">Weather Details</button>
+      </NavLink>
+    </div>
   );
 }

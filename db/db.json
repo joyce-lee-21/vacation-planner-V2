@@ -8,7 +8,6 @@
     },
     {
       "id": 2,
-
       "userName": "johndoe123",
       "password" : "xyZ999*",
       "favoriteCity" : "New York City"
@@ -41,7 +40,6 @@
       "city" : "Los Angeles, CA" 
     },
     {
-
       "id" : 2,
       "userId" : 1,
       "startDate" : "10/1/2021",
@@ -69,7 +67,5 @@
       "endDate" : "10/8/2021",
       "city" : "Honolulu, HI"
     }
-  
-
   ]
 }

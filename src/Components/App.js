@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import "../App.css";
-import MyInfo from "./MyInfo";
-import VacationDetails from "./VacationDetails";
-import VacationCalendar from "./VacationDetails";
-import WeatherDetails from "./VacationDetails";
-import Home from "./Home";
 import Header from "./Header";
 import Content from "./Content";
 
@@ -81,37 +75,16 @@ function App() {
   useEffect(loadVacations, []);
 
   return (
-    // Should these routes be kebab-case?
     <div className="App">
       <Header></Header>
       <NavBar onChangePage={setPage} />
-      <Content />
-      <Switch>
-        <Route path="/MyInfo">
-          <MyInfo currentUser={currentUser} page={page} />
-        </Route>
-        <Route path="/VacationDetails">
-          <VacationDetails currentUser={currentUser} page={page} />
-        </Route>
-        <Route path="/VacationCalendar">
-          <VacationCalendar currentUser={currentUser} page={page} />
-        </Route>
-        <Route path="/WeatherDetails">
-          <WeatherDetails currentUser={currentUser} page={page} />
-        </Route>
-        <Route exact path="/">
-          <Home
-            currentUser={currentUser}
-            page={page}
-            onLoginSubmit={handleLoginSubmit}
-            onForgotPasswordSubmit={handleForgotPasswordSubmit}
-            onAddUser={handleAddUser}
-          />
-        </Route>
-        <Route path="*">
-          <h1>404 not found</h1>
-        </Route>
-      </Switch>
+      <Content
+        currentUser={currentUser}
+        page={page}
+        onLoginSubmit={handleLoginSubmit}
+        onForgotPasswordClick={handleForgotPasswordSubmit}
+        onNewUserClick={handleAddUser}
+      />
     </div>
   );
 }
