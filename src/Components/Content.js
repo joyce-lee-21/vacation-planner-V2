@@ -8,18 +8,18 @@ import { Switch, Route } from "react-router-dom";
 
 export default function Content({currentUser, page, onLoginSubmit, onForgotPasswordClick, onNewUserClick}) {
     return (
-        <div>
+        <>
             <Switch>
                 <Route path="/myinfo/:id">
                     <MyInfo currentUser={currentUser} page={page} />
                 </Route>
-                <Route path="/vacationdetails/:userId/:id">
+                <Route path="/vacationdetails/">
                     <VacationDetails currentUser={currentUser} page={page} />
                 </Route>
                 <Route path="/vacationcalendar/">
                     <VacationCalendar currentUser={currentUser} page={page} />
                 </Route>
-                <Route path="/weather/:userId/:id">
+                <Route path="/weather/">
                     <WeatherDetails currentUser={currentUser} page={page} />
                 </Route>
                 <Route exact path="/">
@@ -35,6 +35,6 @@ export default function Content({currentUser, page, onLoginSubmit, onForgotPassw
                     <h1>404 not found</h1>
                 </Route>
             </Switch>
-        </div>
+        </>
     )
 }
