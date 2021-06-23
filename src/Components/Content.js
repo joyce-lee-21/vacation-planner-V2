@@ -18,16 +18,16 @@ export default function Content({
   return (
     <div>
       <Switch>
-        <Route path="/myinfo/:id">
+        <Route path="/myinfo/">
           <MyInfo currentUser={currentUser} page={page} />
         </Route>
-        <Route path="/vacationdetails/:userId/:id">
+        <Route path="/vacationdetails/">
           <VacationDetails currentUser={currentUser} page={page} />
         </Route>
         <Route path="/vacationcalendar/">
           <VacationCalendar currentUser={currentUser} page={page} />
         </Route>
-        <Route path="/weather/:userId/:id">
+        <Route path="/weather/">
           <WeatherDetails currentUser={currentUser} page={page} />
         </Route>
         <Route exact path="/">
