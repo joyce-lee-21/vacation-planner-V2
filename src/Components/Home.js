@@ -5,11 +5,13 @@ import MyInfo from "./MyInfo";
 export default function Home({
   currentUser,
   page,
-  onForgotPasswordClick,
+  onForgotPasswordSubmit,
   onNewUserClick,
   onLoginSubmit,
   onUserNameChange,
-  onPasswordChange
+  onPasswordChange,
+  onIsUserNameAvailable,
+  onAddUser
 }) {
   const myInfo = <MyInfo currentUser={currentUser} />;
   const loginPage = (
@@ -17,8 +19,10 @@ export default function Home({
       onUserNameChange={onUserNameChange}
       onPasswordChange={onPasswordChange}
       onLoginSubmit={onLoginSubmit}
-      onForgotPasswordClick={onForgotPasswordClick}
+      onForgotPasswordSubmit={onForgotPasswordSubmit}
       onNewUserClick={onNewUserClick}
+      onIsUserNameAvailable={onIsUserNameAvailable}
+      onAddUser={onAddUser}
     />
   );
   const pageToDisplay = currentUser ? myInfo : loginPage;
