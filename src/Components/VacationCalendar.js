@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { WiDaySunny } from 'weather-icons-react';
 
   // API Key from https://rapidapi.com/community/api/open-weather-map/
-  const API_KEY = 'b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64';
+  const API_KEY = '';
 
   const useStyles = makeStyles((theme) => ({
     root: {
