@@ -16,15 +16,11 @@ export default function Content({
   onAddUser,
   onLogout
 }) {
-  const [selectedStartDate, setSelectedStartDate] = React.useState(
-    new Date("2021-06-18T21:11:54")
-  );
-  const [selectedEndDate, setSelectedEndDate] = React.useState(
-    new Date("2021-06-19T21:11:54")
-  );
-  const [newVacation, setNewVacation] = useState("new york");
-  const [weatherDate, setWeatherDate] = useState("");
-
+  const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
+  const [vacationCity, setVacationCity] = useState("New York, NY, USA")
+  const [newVacation, setNewVacation] = useState()
+  const [weatherDate, setWeatherDate] = useState("")
   const onSelectedStartDate = (date) => {
     let startDate = date;
     let convertedStartDate = new Date(startDate);
@@ -44,7 +40,15 @@ export default function Content({
     setSelectedEndDate(shortEndDate);
   };
   const onNewVacation = (city) => {
-    setNewVacation(city);
+    setVacationCity(city)
+  }
+
+  const handleVacationSubmit = () => {
+    setNewVacation({
+      start: selectedStartDate,
+      end: selectedEndDate,
+      city: vacationCity
+    })
   };
 
   const vacationData = {
@@ -77,9 +81,12 @@ export default function Content({
           />
         </Route>
         <Route path="/vacationdetails/">
-          <VacationDetails
-            currentUser={currentUser}
-            page={page}
+          <VacationDetails 
+            currentUser={currentUser} 
+            page={page} 
+            selectedStartDate={selectedStartDate}
+            selectedEndDate={selectedEndDate}
+            vacationCity={vacationCity}
             onSelectedStartDate={onSelectedStartDate}
             onSelectedEndDate={onSelectedEndDate}
             onNewVacation={onNewVacation}
@@ -87,11 +94,11 @@ export default function Content({
           />
         </Route>
         <Route path="/vacationcalendar/">
-          <VacationCalendar
-            currentUser={currentUser}
-            page={page}
-            onWeatherClick={onWeatherClick}
-            vacationData={vacationData}
+          <VacationCalendar 
+            currentUser={currentUser} 
+            page={page} 
+            onWeatherClick={onWeatherClick} 
+            vacationData={newVacation} 
           />
           {weatherDate && (
             <WeatherDetails
