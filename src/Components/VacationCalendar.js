@@ -6,7 +6,7 @@ import { addDays } from "date-fns";
 import { first } from "lodash";
 
 // API Key from https://rapidapi.com/community/api/open-weather-map/
-const API_KEY = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10";
+const API_KEY = "";
 const API_HOST = "community-open-weather-map.p.rapidapi.com";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +55,7 @@ const MONTHS = {
   11: "December"
 };
 
-function VacationCalendar() {
+function VacationCalendar({onWeatherClick}) {
   const classes = useStyles();
 
   const [forecastArray, setForecastArray] = useState([]);
@@ -95,27 +95,6 @@ function VacationCalendar() {
       .then((response) => response.json())
       .then((data) => buildForecastArray(data.list));
   }, []);
-
-  // const weatherIcon = () => {
-  //   const conditions = daily.weather[0].main.toLowerCase()
-  //   if (conditions.includes("clear")) {
-  //     return <WiDaySunny size={30} color='#000' />
-  //   } else if (conditions.includes("rain")) {
-  //     <WiRain size={30} color='#000' />
-  //   } else if (conditions.includes("cloud")) {
-  //     <WiCloud size={30} color='#000' />
-  //   } else if (conditions.includes("lightning")) {
-  //     <WiLightning size={30} color='#000' />
-  // }
-
-  // const weatherIcon = () => {
-  //   forecastArray.map(daily => {
-
-  //     return (
-
-  //     )
-  //   })
-  // }
 
   function HeaderRow() {
     return (
@@ -175,7 +154,7 @@ function VacationCalendar() {
                   <Paper className={classes.date}>
                     {new Date(daily.dt * 1000).getDate()}
                   </Paper>
-                  <Paper className={classes.weather}>
+                  <Paper className={classes.weather} onClick={() => onWeatherClick(daily.dt)}>
                     <div className="weather-elements">
                       <span className="temp-number">
                         {daily.temp

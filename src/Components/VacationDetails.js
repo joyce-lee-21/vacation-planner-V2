@@ -1,12 +1,13 @@
 import React from "react";
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,11 +15,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VacationDetail() {
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2021-06-18T21:11:54'));
+export default function VacationDetail({onSelectedStartDate, onSelectedEndDate, onNewVacation, onVacationSubmit}) {
+  const handleStartDateChange = (e) => {
+    onSelectedStartDate(e)
+  }
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleEndDateChange = (e) => {
+    onSelectedEndDate(e)
+  }
+
+  const handleVacationInput = (e) => {
+    onNewVacation(e.target.value)
   }
 
   const classes = useStyles();
@@ -35,10 +42,9 @@ export default function VacationDetail() {
               variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
-              id="date-picker-inline"
+              id="startdate-picker-inline"
               label="Start Date"
-              value={selectedDate}
-              onChange={handleDateChange}
+              onChange={handleStartDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
@@ -62,10 +68,9 @@ export default function VacationDetail() {
               variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
-              id="date-picker-inline"
+              id="enddate-picker-inline"
               label="End Date"
-              value={selectedDate}
-              onChange={handleDateChange}
+              onChange={handleEndDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
@@ -86,7 +91,13 @@ export default function VacationDetail() {
           <span>Vacation City:</span>
         </Grid>
         <Grid item xs={3}>
-          <input type="text" name="vacation-city" size="40"/>
+          <input 
+            type="text" 
+            name="vacation-city" 
+            size="40" 
+            placeholder="City, State, Country" 
+            onChange={handleVacationInput}
+          />
         </Grid>
         <Grid item xs={3}>
         </Grid>
@@ -112,9 +123,11 @@ export default function VacationDetail() {
             <Grid item xs={5}>
             </Grid>
             <Grid item xs={3}>
-              <Button variant="contained" color="secondary">
-                Check Weather
-              </Button>
+              <Link to="/vacationcalendar" style={{textDecoration: "none"}} onClick={onVacationSubmit}>
+                <Button variant="contained" color="secondary">
+                  Check Weather
+                </Button>
+              </Link>
             </Grid>
           </Grid>
         </Grid>
