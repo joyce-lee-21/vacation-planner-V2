@@ -1,8 +1,8 @@
 import React from "react";
 
 export default function MyInfo({ currentUser, allVacations }) {
-  console.log(currentUser);
-  console.log(allVacations);
+  // console.log(currentUser);
+  // console.log(allVacations);
   const displayedVacations = allVacations?.filter(
     (vac) => vac.userId === currentUser?.id
   );

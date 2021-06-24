@@ -3,12 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
-const API_KEY = '';
+const API_KEY = 'b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64';
 
 // To render this component properly with updated data from db.json:
 // 1. insert your API KEY above
-// 2. add event listener to vacation calendar date to initiate setter function to update the selectedDate state
-// 3. updated the fetch URL with string interpolation of a user's city (make sure the appropriate prop is passed in). currently set to Honolulu
+// 2. add event listener to vacation calendar date to initiate setter function to update the selectedDate state through Content component (parent)
+// 3. update the fetch URL with string interpolation of a user's city (make sure the appropriate prop is passed in). currently hard coded to Honolulu
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,7 +50,7 @@ const API_KEY = '';
     },
   }));
 
-export default function WeatherDetail() {
+export default function WeatherDetail({currentUser, page, weatherDate}) {
   const classes = useStyles();
 
     const [forecastArray, setForecastArray] = useState([])

@@ -6,7 +6,7 @@ import { addDays } from "date-fns";
 import { first } from "lodash";
 
 // API Key from https://rapidapi.com/community/api/open-weather-map/
-const API_KEY = "";
+const API_KEY = "b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64";
 const API_HOST = "community-open-weather-map.p.rapidapi.com";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,12 +55,17 @@ const MONTHS = {
   11: "December"
 };
 
-function VacationCalendar({onWeatherClick}) {
+function VacationCalendar({currentUser, page, vacationData, onWeatherClick}) {
   const classes = useStyles();
 
   const [forecastArray, setForecastArray] = useState([]);
-
   const [currentMonth, setCurrentMonth] = useState("");
+
+  const d2 = new Date(vacationData.end).getDate();
+  const d1 = new Date(vacationData.start).getTime();
+  // const dateRange = parseInt((d2-d1)/(24*3600*1000))+1
+  const city = vacationData.city
+  // console.log(d2);
 
   function leftPadWithEmptyObject(arr, seconds) {
     arr.unshift({ dt: seconds });
@@ -70,20 +75,19 @@ function VacationCalendar({onWeatherClick}) {
     let firstDayOfWeek = new Date(forecast[0].dt * 1000).getDay();
     setCurrentMonth(new Date(forecast[0].dt * 1000).getMonth());
     let secondsInFirstDay = forecast[0].dt;
-    console.log(firstDayOfWeek);
+    // console.log(firstDayOfWeek);
     while (firstDayOfWeek > 0) {
       secondsInFirstDay -= SECONDS_PER_DAY;
       leftPadWithEmptyObject(forecast, secondsInFirstDay);
       firstDayOfWeek--;
     }
-
-    console.log(forecast);
+    // console.log(forecast);
     setForecastArray(forecast);
   }
 
   useEffect(() => {
     fetch(
-      "https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=honolulu&cnt=10&units=imperial&mode=JSON",
+      `https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=${city}&cnt=16&units=imperial&mode=JSON`,
       {
         method: "GET",
         headers: {
