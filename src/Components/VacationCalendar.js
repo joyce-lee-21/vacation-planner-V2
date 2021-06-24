@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 // !! This function will replace the icon placeholders below in the FormRow component
 
+const DAYS_PER_WEEK = 7;
 const SECONDS_PER_DAY = 86400;
 const MONTHS = {
   0: "January",
@@ -167,28 +168,39 @@ function VacationCalendar() {
           <Grid item xs={2}></Grid>
           {forecastArray.map((daily) => {
             const conditions = daily.weather && daily.weather[0].icon;
+            const firstDay = forecastArray[0].dt;
             return (
-              <Grid item xs={1} key={daily?.dt}>
-                <Paper className={classes.date}>
-                  {new Date(daily?.dt * 1000).getDate()}
-                </Paper>
-                <Paper className={classes.weather}>
-                  <div className="weather-elements">
-                    <span className="temp-number">
-                      {daily.temp
-                        ? `${Math.round(daily.temp.day)}°`
-                        : "no data"}
-                    </span>
-                    {conditions && (
-                      <img
-                        src={`http://openweathermap.org/img/wn/${conditions}@2x.png`}
-                        alt="weather-icon"
-                        className="weather-icon"
-                      />
-                    )}
-                  </div>
-                </Paper>
-              </Grid>
+              <>
+                <Grid item xs={1} key={daily.dt}>
+                  <Paper className={classes.date}>
+                    {new Date(daily.dt * 1000).getDate()}
+                  </Paper>
+                  <Paper className={classes.weather}>
+                    <div className="weather-elements">
+                      <span className="temp-number">
+                        {daily.temp
+                          ? `${Math.round(daily.temp.day)}°`
+                          : "no data"}
+                      </span>
+                      {conditions && (
+                        <img
+                          src={`http://openweathermap.org/img/wn/${conditions}@2x.png`}
+                          alt="weather-icon"
+                          className="weather-icon"
+                        />
+                      )}
+                    </div>
+                  </Paper>
+                </Grid>{" "}
+                {daily.dt ===
+                  (DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + firstDay && (
+                  <Grid item xs={3}></Grid>
+                )}
+                {daily.dt ===
+                  (DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + firstDay && (
+                  <Grid item xs={2}></Grid>
+                )}
+              </>
             );
           })}
           <Grid item xs={1}></Grid>
