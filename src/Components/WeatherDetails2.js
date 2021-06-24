@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function WeatherDetails({ currentUser, page, weatherDate }) {
+export default function WeatherDetails2({ currentUser, page, weatherDate }) {
   const classes = useStyles();
 
   const [forecastArray, setForecastArray] = useState([]);
