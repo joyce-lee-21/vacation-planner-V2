@@ -14,12 +14,20 @@ export default function NewUserForm({
   onHideNewUserForm
 }) {
   const [userName, setUserName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
   const [favoriteCity, setFavoriteCity] = useState("");
 
   function handleUserNameChange(event) {
     setUserName(event.target.value);
+  }
+  function handleFirstNameChange(event) {
+    setFirstName(event.target.value);
+  }
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
   }
   function handlePasswordChange(event) {
     setPassword(event.target.value);
@@ -51,12 +59,14 @@ export default function NewUserForm({
     );
   }
 
-  function sendNewUserToDB(event) {
+  function sendNewUserToDB() {
     fetch(USERS_API, {
       method: "POST",
       headers: HEADERS,
       body: JSON.stringify({
         userName: userName,
+        firstName: firstName,
+        lastName: lastName,
         password: password,
         favoriteCity: favoriteCity
       })
@@ -85,6 +95,20 @@ export default function NewUserForm({
           name="userName"
           value={userName}
           onChange={handleUserNameChange}
+        />
+        <div>First Name</div>
+        <input
+          type="text"
+          name="firstName"
+          value={firstName}
+          onChange={handleFirstNameChange}
+        />
+        <div>localhost Name</div>
+        <input
+          type="text"
+          name="lastName"
+          value={lastName}
+          onChange={handleLastNameChange}
         />
         <div>Password</div>
         <input

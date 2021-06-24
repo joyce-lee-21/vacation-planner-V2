@@ -1,21 +1,24 @@
 import React from "react";
 import LoginPage from "./LoginPage";
-import MyInfo from "./MyInfo";
 
 export default function Home({
   currentUser,
-  page,
   onForgotPasswordSubmit,
-  allVacations,
   onNewUserClick,
   onLoginSubmit,
   onUserNameChange,
   onPasswordChange,
   onIsUserNameAvailable,
-  onAddUser
+  onAddUser,
+  onLogout
 }) {
-  const myInfo = (
-    <MyInfo currentUser={currentUser} allVacations={allVacations} />
+  function handleLogOutClick() {
+    onLogout();
+  }
+  const loggedInMessage = (
+    <div>
+      You are logged in<button onClick={handleLogOutClick}>Log Out</button>
+    </div>
   );
   const loginPage = (
     <LoginPage
@@ -28,6 +31,6 @@ export default function Home({
       onAddUser={onAddUser}
     />
   );
-  const pageToDisplay = currentUser ? myInfo : loginPage;
+  const pageToDisplay = currentUser ? loggedInMessage : loginPage;
   return <div>Home Page {pageToDisplay}</div>;
 }
