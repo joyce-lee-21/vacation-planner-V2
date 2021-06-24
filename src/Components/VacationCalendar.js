@@ -6,8 +6,11 @@ import { addDays } from "date-fns";
 import { first } from "lodash";
 
 // API Key from https://rapidapi.com/community/api/open-weather-map/
-const API_KEY = "b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64";
+// Sean's API key = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10"
+
+const API_KEY = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10";
 const API_HOST = "community-open-weather-map.p.rapidapi.com";
+const DEFAULT_CITY = "honolulu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,11 +63,13 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
 
   const [forecastArray, setForecastArray] = useState([]);
   const [currentMonth, setCurrentMonth] = useState("");
+  const [calendarFlipRemainder, setCalendarFlipRemainder] = useState(0);
 
-  const d2 = new Date(vacationData.end).getDate();
-  const d1 = new Date(vacationData.start).getTime();
+  //const d2 = new Date(vacationData?.end).getDate();
+  //const d1 = new Date(vacationData?.start).getTime();
+
   // const dateRange = parseInt((d2-d1)/(24*3600*1000))+1
-  const city = vacationData.city;
+  const city = vacationData?.city ?? DEFAULT_CITY;
   // console.log(d2);
 
   function leftPadWithEmptyObject(arr, seconds) {
@@ -81,8 +86,28 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
       leftPadWithEmptyObject(forecast, secondsInFirstDay);
       firstDayOfWeek--;
     }
+
     // console.log(forecast);
     setForecastArray(forecast);
+    setCalendarFlipRemainder(
+      ((DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + forecast[0].dt) %
+        (SECONDS_PER_DAY * DAYS_PER_WEEK)
+    );
+  }
+  function isEndOfWeek(seconds) {
+    return (
+      seconds % (SECONDS_PER_DAY * DAYS_PER_WEEK) === calendarFlipRemainder
+    );
+  }
+
+  function addCalendarPadding() {
+    return (
+      <>
+        {/* You MUST do this in two steps */}
+        <Grid item xs={3}></Grid>
+        <Grid item xs={2}></Grid>
+      </>
+    );
   }
 
   useEffect(() => {
@@ -101,6 +126,7 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
   }, []);
 
   function HeaderRow() {
+    console.log(calendarFlipRemainder);
     return (
       <React.Fragment>
         <Grid item xs={2}></Grid>
@@ -151,7 +177,7 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
           <Grid item xs={2}></Grid>
           {forecastArray.map((daily) => {
             const conditions = daily.weather && daily.weather[0].icon;
-            const firstDay = forecastArray[0].dt;
+            const firstDay = forecastArray[0].dt; // TODO delete this once refactored
             return (
               <>
                 <Grid item xs={1} key={daily.dt}>
@@ -177,15 +203,8 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
                       )}
                     </div>
                   </Paper>
-                </Grid>{" "}
-                {daily.dt ===
-                  (DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + firstDay && (
-                  <Grid item xs={3}></Grid>
-                )}
-                {daily.dt ===
-                  (DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + firstDay && (
-                  <Grid item xs={2}></Grid>
-                )}
+                </Grid>
+                {isEndOfWeek(daily.dt) && addCalendarPadding()}
               </>
             );
           })}

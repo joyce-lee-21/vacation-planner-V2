@@ -43,6 +43,7 @@ export default function Content({
     setVacationCity(city);
   };
 
+  /*
   const handleVacationSubmit = () => {
     setNewVacation({
       start: selectedStartDate,
@@ -50,7 +51,7 @@ export default function Content({
       city: vacationCity
     });
   };
-
+*/
   const vacationData = {
     start: selectedStartDate,
     end: selectedEndDate,
