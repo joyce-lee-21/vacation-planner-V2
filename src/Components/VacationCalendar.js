@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import { Box } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { addDays } from "date-fns";
 import { first } from "lodash";
@@ -10,7 +12,6 @@ import { first } from "lodash";
 
 const API_KEY = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10";
 const API_HOST = "community-open-weather-map.p.rapidapi.com";
-const DEFAULT_CITY = "honolulu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,9 +69,19 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
   //const d2 = new Date(vacationData?.end).getDate();
   //const d1 = new Date(vacationData?.start).getTime();
 
-  // const dateRange = parseInt((d2-d1)/(24*3600*1000))+1
-  const city = vacationData?.city ?? DEFAULT_CITY;
-  // console.log(d2);
+  const city = vacationData.city
+
+  let getDaysArray = function(start,end) {
+    for (var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
+      arr.push(new Date(dt));
+    }
+    return arr;
+  }
+
+  let dateArray = getDaysArray(new Date(vacationData.start),new Date(vacationData.end));
+  console.log(forecastArray.slice(0,7));
+  console.log(forecastArray.slice(7,14));
+  console.log(forecastArray);
 
   function leftPadWithEmptyObject(arr, seconds) {
     arr.unshift({ dt: seconds });
@@ -112,7 +123,7 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
 
   useEffect(() => {
     fetch(
-      `https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=${city}&cnt=16&units=imperial&mode=JSON`,
+      `https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=${city}&cnt=${dateArray.length}&units=imperial&mode=JSON`,
       {
         method: "GET",
         headers: {
@@ -128,104 +139,221 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
   function HeaderRow() {
     console.log(calendarFlipRemainder);
     return (
-      <React.Fragment>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader0">
-            Sun
-          </Paper>
+      <Container>
+        <Grid
+          container 
+          spacing={0}
+          direction="row"
+        >
+          <Grid item xs={2}></Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader0">
+              Sun
+            </Paper>
+          </Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader1">
+              Mon
+            </Paper>
+          </Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader2">
+              Tues
+            </Paper>
+          </Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader3">
+              Wed
+            </Paper>
+          </Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader4">
+              Thurs
+            </Paper>
+          </Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader5">
+              Fri
+            </Paper>
+          </Grid>
+          <Grid item xs={1}>
+            <Paper className={classes.paper} id="dayWeekHeader6">
+              Sat
+            </Paper>
+          </Grid>
+          <Grid item xs={1}></Grid>
         </Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader1">
-            Mon
-          </Paper>
-        </Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader2">
-            Tues
-          </Paper>
-        </Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader3">
-            Wed
-          </Paper>
-        </Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader4">
-            Thurs
-          </Paper>
-        </Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader5">
-            Fri
-          </Paper>
-        </Grid>
-        <Grid item xs={1}>
-          <Paper className={classes.paper} id="dayWeekHeader6">
-            Sat
-          </Paper>
-        </Grid>
-        <Grid item xs={1}></Grid>
-      </React.Fragment>
+      </Container>
     );
   }
-  // Below should be dynamic to data. Pass in temperature, code conditional to render weather icon. Weather icon optional?
-  function FormRow() {
+
+  function DateRow1() {
     return (
       <>
-        <React.Fragment>
-          <Grid item xs={2}></Grid>
-          {forecastArray.map((daily) => {
-            const conditions = daily.weather && daily.weather[0].icon;
-            const firstDay = forecastArray[0].dt; // TODO delete this once refactored
-            return (
-              <>
-                <Grid item xs={1} key={daily.dt}>
-                  <Paper className={classes.date}>
-                    {new Date(daily.dt * 1000).getDate()}
-                  </Paper>
-                  <Paper
-                    className={classes.weather}
-                    onClick={() => onWeatherClick(daily.dt)}
-                  >
-                    <div className="weather-elements">
-                      <span className="temp-number">
-                        {daily.temp
-                          ? `${Math.round(daily.temp.day)}°`
-                          : "no data"}
-                      </span>
-                      {conditions && (
-                        <img
-                          src={`http://openweathermap.org/img/wn/${conditions}@2x.png`}
-                          alt="weather-icon"
-                          className="weather-icon"
-                        />
-                      )}
-                    </div>
-                  </Paper>
-                </Grid>
-                {isEndOfWeek(daily.dt) && addCalendarPadding()}
-              </>
-            );
-          })}
-          <Grid item xs={1}></Grid>
-        </React.Fragment>
+        <Container>
+          <Grid
+            container 
+            spacing={0}
+            direction="row"
+          >
+            {/* 2 empty columns to push calendar to the right*/}
+            <Grid item xs={2}></Grid>
+              {forecastArray.slice(0,7).map((daily) => {
+                const conditions = daily.weather && daily.weather[0].icon;
+                const firstDay = forecastArray[0].dt;
+                return (
+                  <Grid key={daily.dt} item xs={1}>
+                    <Paper className={classes.date}>
+                      {new Date(daily.dt * 1000).getDate()}
+                    </Paper>
+                    <Paper key={daily.dt} className={classes.weather} onClick={() => onWeatherClick(daily.dt)}>
+                      <div className="weather-elements">
+                        <span className="temp-number">
+                          {daily.temp
+                            ? `${Math.round(daily.temp.day)}°`
+                            : "no data"}
+                        </span>
+                        {conditions && (
+                          <img
+                            src={`http://openweathermap.org/img/wn/${conditions}@2x.png`}
+                            alt="weather-icon"
+                            className="weather-icon"
+                          />
+                        )}
+                      </div>
+                    </Paper>
+                  </Grid>
+                )
+              })}
+            <Grid item xs={3}></Grid>
+          </Grid>
+        </Container>
+      </>
+    );
+  }
+  function DateRow2() {
+    return (
+      <>
+        <Container>
+          <Grid
+            container 
+            spacing={0}
+            direction="row"
+          >
+            {/* 2 empty columns to push calendar to the right*/}
+            <Grid item xs={2}></Grid>
+              {forecastArray.slice(7,14).map((daily) => {
+                const conditions = daily.weather && daily.weather[0].icon;
+                const firstDay = forecastArray[0].dt;
+                return (
+                  <Grid key={daily.dt} item xs={1}>
+                    <Paper className={classes.date}>
+                      {new Date(daily.dt * 1000).getDate()}
+                    </Paper>
+                    <Paper key={daily.dt} className={classes.weather} onClick={() => onWeatherClick(daily.dt)}>
+                      <div className="weather-elements">
+                        <span className="temp-number">
+                          {daily.temp
+                            ? `${Math.round(daily.temp.day)}°`
+                            : "no data"}
+                        </span>
+                        {conditions && (
+                          <img
+                            src={`http://openweathermap.org/img/wn/${conditions}@2x.png`}
+                            alt="weather-icon"
+                            className="weather-icon"
+                          />
+                        )}
+                      </div>
+                    </Paper>
+                  </Grid>
+                )
+              })}
+            <Grid item xs={3}></Grid>
+          </Grid>
+        </Container>
+      </>
+    );
+  }
+  function DateRow3() {
+    return (
+      <>
+        <Container>
+          <Grid
+            container 
+            spacing={0}
+            direction="row"
+          >
+            {/* 2 empty columns to push calendar to the right*/}
+            <Grid item xs={2}></Grid>
+              {forecastArray.slice(14,21).map((daily) => {
+                const conditions = daily.weather && daily.weather[0].icon;
+                const firstDay = forecastArray[0].dt;
+                return (
+                  <Grid key={daily.dt} item xs={1}>
+                    <Paper className={classes.date}>
+                      {new Date(daily.dt * 1000).getDate()}
+                    </Paper>
+                    <Paper key={daily.dt} className={classes.weather} onClick={() => onWeatherClick(daily.dt)}>
+                      <div className="weather-elements">
+                        <span className="temp-number">
+                          {daily.temp
+                            ? `${Math.round(daily.temp.day)}°`
+                            : "no data"}
+                        </span>
+                        {conditions && (
+                          <img
+                            src={`http://openweathermap.org/img/wn/${conditions}@2x.png`}
+                            alt="weather-icon"
+                            className="weather-icon"
+                          />
+                        )}
+                      </div>
+                    </Paper>
+                  </Grid>
+                )
+              })}
+            <Grid item xs={3}></Grid>
+          </Grid>
+        </Container>
       </>
     );
   }
   return (
     <div className="calendar-container">
-      <h2>Vacation Calendar</h2>
-      <h3>{MONTHS[currentMonth]}</h3>
+      <h2>{MONTHS[currentMonth]}</h2>
       <div className={classes.root}>
         <Grid container spacing={1}>
           <Grid container item xs={12} spacing={0}>
             <HeaderRow />
           </Grid>
-          {/* For every 7 days, render the below code */}
-          <Grid container item xs={12} spacing={0}>
-            <FormRow />
-          </Grid>
+          {forecastArray.length > 14
+            ? (<>
+                <Grid container item xs={12} spacing={0}>
+                  <DateRow1 />
+                </Grid>
+                <Grid container item xs={12} spacing={0}>
+                  <DateRow2 />
+                </Grid>
+                <Grid container item xs={12} spacing={0}>
+                  <DateRow3 />
+                </Grid>
+              </>)
+              : forecastArray.length > 7 && forecastArray.length <=14
+                ? (<>
+                    <Grid container item xs={12} spacing={0}>
+                      <DateRow1 />
+                    </Grid>
+                    <Grid container item xs={12} spacing={0}>
+                      <DateRow2 />
+                    </Grid>
+                  </>)
+                  : forecastArray.length <=7
+                    ? (<Grid container item xs={12} spacing={0}>
+                        <DateRow1 />
+                      </Grid>)
+                      : null
+          }
         </Grid>
       </div>
     </div>

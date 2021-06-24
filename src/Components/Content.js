@@ -18,9 +18,15 @@ export default function Content({
 }) {
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
-  const [vacationCity, setVacationCity] = useState("New York, NY, USA");
-  const [newVacation, setNewVacation] = useState();
-  const [weatherDate, setWeatherDate] = useState("");
+  const [calendarArray, setCalendarArray] = useState([])
+  const [vacationCity, setVacationCity] = useState("New York, NY, USA")
+  const [newVacation, setNewVacation] = useState({
+    start: new Date(),
+    end: new Date(),
+    city: vacationCity
+  })
+  const [weatherDate, setWeatherDate] = useState("")
+
   const onSelectedStartDate = (date) => {
     let startDate = date;
     let convertedStartDate = new Date(startDate);
@@ -40,26 +46,22 @@ export default function Content({
     setSelectedEndDate(shortEndDate);
   };
   const onNewVacation = (city) => {
-    setVacationCity(city);
-  };
-
-  /*
+    setVacationCity(city)
+  }
+// console.log(new Date(selectedStartDate).getDate() + 3)
   const handleVacationSubmit = () => {
+    // let dateArray = []
+    // let currentDate = selectedStartDate
+    // while (currentDate <= selectedEndDate) {
+    //     dateArray.push(currentDate);
+    //     currentDate = currentDate.addDays(1);
+    // }
+    // setCalendarArray(dateArray)
     setNewVacation({
       start: selectedStartDate,
       end: selectedEndDate,
       city: vacationCity
-    });
-  };
-*/
-  const vacationData = {
-    start: selectedStartDate,
-    end: selectedEndDate,
-    city: newVacation
-  };
-
-  const handleVacationSubmit = () => {
-    setNewVacation(vacationData);
+    })
   };
 
   const onWeatherClick = (date) => {
@@ -82,9 +84,9 @@ export default function Content({
           />
         </Route>
         <Route path="/vacationdetails/">
-          <VacationDetails
-            currentUser={currentUser}
-            page={page}
+          <VacationDetails 
+            currentUser={currentUser} 
+            page={page} 
             selectedStartDate={selectedStartDate}
             selectedEndDate={selectedEndDate}
             vacationCity={vacationCity}
@@ -95,11 +97,12 @@ export default function Content({
           />
         </Route>
         <Route path="/vacationcalendar/">
-          <VacationCalendar
-            currentUser={currentUser}
-            page={page}
-            onWeatherClick={onWeatherClick}
-            vacationData={newVacation}
+          <VacationCalendar 
+            currentUser={currentUser} 
+            page={page} 
+            onWeatherClick={onWeatherClick} 
+            vacationData={newVacation} 
+            calendarArray={calendarArray}
           />
           {weatherDate && (
             <WeatherDetails
