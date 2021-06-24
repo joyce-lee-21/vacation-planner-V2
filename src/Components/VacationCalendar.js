@@ -8,7 +8,9 @@ import { addDays } from "date-fns";
 import { first } from "lodash";
 
 // API Key from https://rapidapi.com/community/api/open-weather-map/
-const API_KEY = "b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64";
+// Sean's API key = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10"
+
+const API_KEY = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10";
 const API_HOST = "community-open-weather-map.p.rapidapi.com";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,11 +59,15 @@ const MONTHS = {
   11: "December"
 };
 
-function VacationCalendar({currentUser, page, vacationData, calendarArray, onWeatherClick}) {
+function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
   const classes = useStyles();
 
   const [forecastArray, setForecastArray] = useState([]);
   const [currentMonth, setCurrentMonth] = useState("");
+  const [calendarFlipRemainder, setCalendarFlipRemainder] = useState(0);
+
+  //const d2 = new Date(vacationData?.end).getDate();
+  //const d1 = new Date(vacationData?.start).getTime();
 
   const city = vacationData.city
 
@@ -91,8 +97,28 @@ function VacationCalendar({currentUser, page, vacationData, calendarArray, onWea
       leftPadWithEmptyObject(forecast, secondsInFirstDay);
       firstDayOfWeek--;
     }
+
     // console.log(forecast);
     setForecastArray(forecast);
+    setCalendarFlipRemainder(
+      ((DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + forecast[0].dt) %
+        (SECONDS_PER_DAY * DAYS_PER_WEEK)
+    );
+  }
+  function isEndOfWeek(seconds) {
+    return (
+      seconds % (SECONDS_PER_DAY * DAYS_PER_WEEK) === calendarFlipRemainder
+    );
+  }
+
+  function addCalendarPadding() {
+    return (
+      <>
+        {/* You MUST do this in two steps */}
+        <Grid item xs={3}></Grid>
+        <Grid item xs={2}></Grid>
+      </>
+    );
   }
 
   useEffect(() => {
@@ -111,6 +137,7 @@ function VacationCalendar({currentUser, page, vacationData, calendarArray, onWea
   }, []);
 
   function HeaderRow() {
+    console.log(calendarFlipRemainder);
     return (
       <Container>
         <Grid
