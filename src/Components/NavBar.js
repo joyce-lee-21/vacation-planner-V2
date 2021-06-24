@@ -45,19 +45,24 @@ export default function NavBar({ onChangePage }) {
     <>
       <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <NavLink exact to="/" style={{textDecoration: 'none'}}>
             <Paper className={classes.paper}>Home</Paper>
           </NavLink>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <NavLink to="/myinfo" style={{textDecoration: 'none'}}>
             <Paper className={classes.paper}>My Info</Paper>
           </NavLink>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <NavLink to="/vacationdetails" style={{textDecoration: 'none'}}>
             <Paper className={classes.paper}>Vacation Details</Paper>
+          </NavLink>
+        </Grid>
+        <Grid item xs={3}>
+          <NavLink to="/vacationcalendar" style={{textDecoration: 'none'}}>
+            <Paper className={classes.paper}>Vacation Calendar</Paper>
           </NavLink>
         </Grid>
       </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MyInfo from "./MyInfo";
 import VacationDetails from "./VacationDetails";
 import VacationCalendar from "./VacationCalendar";
@@ -15,6 +15,54 @@ export default function Content({
   onIsUserNameAvailable,
   onAddUser
 }) {
+
+  const [selectedStartDate, setSelectedStartDate] = React.useState(new Date('2021-06-18T21:11:54'));
+  const [selectedEndDate, setSelectedEndDate] = React.useState(new Date('2021-06-19T21:11:54'));
+  const [newVacation, setNewVacation] = useState("new york")
+  const [weatherDate, setWeatherDate] = useState("")
+
+  const onSelectedStartDate = (date) => {
+    let startDate = date;
+    let convertedStartDate = new Date(startDate);
+    let month = convertedStartDate.getMonth() + 1
+    let day = convertedStartDate.getDate();
+    let year = convertedStartDate.getFullYear();
+    let shortStartDate = month + "/" + day + "/" + year;
+    setSelectedStartDate(shortStartDate)
+  }
+  const onSelectedEndDate = (date) => {
+    let endDate = date;
+    let convertedEndDate = new Date(endDate);
+    let month = convertedEndDate.getMonth() + 1
+    let day = convertedEndDate.getDate();
+    let year = convertedEndDate.getFullYear();
+    let shortEndDate = month + "/" + day + "/" + year;
+    setSelectedEndDate(shortEndDate)
+  }
+  const onNewVacation = (city) => {
+    setNewVacation(city)
+  }
+
+  const vacationData = {
+    start: selectedStartDate,
+    end: selectedEndDate,
+    city: newVacation
+  }
+
+  const handleVacationSubmit = () => {
+    setNewVacation(vacationData)
+  }
+
+  const onWeatherClick = (date) => {
+    let convertedWeatherDate = new Date(date * 1000);
+    let month = convertedWeatherDate.getMonth() + 1
+    let day = convertedWeatherDate.getDate();
+    let year = convertedWeatherDate.getFullYear();
+    let shortWeatherDate = month + "/" + day + "/" + year;
+    setWeatherDate(shortWeatherDate)
+  }
+  
+
   return (
     <div>
       <Switch>
@@ -22,13 +70,26 @@ export default function Content({
           <MyInfo currentUser={currentUser} page={page}  allVacations={allVacations} />
         </Route>
         <Route path="/vacationdetails/">
-          <VacationDetails currentUser={currentUser} page={page} />
+          <VacationDetails 
+            currentUser={currentUser} 
+            page={page} 
+            onSelectedStartDate={onSelectedStartDate}
+            onSelectedEndDate={onSelectedEndDate}
+            onNewVacation={onNewVacation}
+            onVacationSubmit={handleVacationSubmit}
+          />
         </Route>
         <Route path="/vacationcalendar/">
-          <VacationCalendar currentUser={currentUser} page={page} />
-        </Route>
-        <Route path="/weather/">
-          <WeatherDetails currentUser={currentUser} page={page} />
+          <VacationCalendar 
+            currentUser={currentUser} 
+            page={page} 
+            onWeatherClick={onWeatherClick} 
+            vacationData={vacationData} 
+          />
+          {weatherDate 
+              ? <WeatherDetails currentUser={currentUser} page={page} weatherDate={weatherDate}/> 
+              : null
+          }
         </Route>
         <Route exact path="/">
           <Home
