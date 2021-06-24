@@ -134,7 +134,7 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
     )
       .then((response) => response.json())
       .then((data) => buildForecastArray(data.list));
-  }, []);
+  }, [city]);
 
   function HeaderRow() {
     console.log(calendarFlipRemainder);
