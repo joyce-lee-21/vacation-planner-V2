@@ -63,6 +63,10 @@ function App() {
     setAllUsers(updatedUsers);
   }
 
+  function handleLogout() {
+    setCurrentUser(null);
+  }
+
   function loadUsers() {
     fetch(USERS_API)
       .then((res) => res.json())
@@ -92,6 +96,7 @@ function App() {
         onForgotPasswordSubmit={handleForgotPasswordSubmit}
         onIsUserNameAvailable={isUserNameAvailable}
         onAddUser={handleAddUser}
+        onLogout={handleLogout}
       />
     </div>
   );

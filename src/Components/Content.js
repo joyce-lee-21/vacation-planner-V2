@@ -13,33 +13,32 @@ export default function Content({
   onLoginSubmit,
   onForgotPasswordSubmit,
   onIsUserNameAvailable,
-  onAddUser
+  onAddUser,
+  onLogout
 }) {
-
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
   const [vacationCity, setVacationCity] = useState("New York, NY, USA")
   const [newVacation, setNewVacation] = useState()
   const [weatherDate, setWeatherDate] = useState("")
-
   const onSelectedStartDate = (date) => {
     let startDate = date;
     let convertedStartDate = new Date(startDate);
-    let month = convertedStartDate.getMonth() + 1
+    let month = convertedStartDate.getMonth() + 1;
     let day = convertedStartDate.getDate();
     let year = convertedStartDate.getFullYear();
     let shortStartDate = month + "/" + day + "/" + year;
-    setSelectedStartDate(shortStartDate)
-  }
+    setSelectedStartDate(shortStartDate);
+  };
   const onSelectedEndDate = (date) => {
     let endDate = date;
     let convertedEndDate = new Date(endDate);
-    let month = convertedEndDate.getMonth() + 1
+    let month = convertedEndDate.getMonth() + 1;
     let day = convertedEndDate.getDate();
     let year = convertedEndDate.getFullYear();
     let shortEndDate = month + "/" + day + "/" + year;
-    setSelectedEndDate(shortEndDate)
-  }
+    setSelectedEndDate(shortEndDate);
+  };
   const onNewVacation = (city) => {
     setVacationCity(city)
   }
@@ -50,25 +49,36 @@ export default function Content({
       end: selectedEndDate,
       city: vacationCity
     })
-  }
+  };
 
-  // console.log(newVacation)
+  const vacationData = {
+    start: selectedStartDate,
+    end: selectedEndDate,
+    city: newVacation
+  };
+
+  const handleVacationSubmit = () => {
+    setNewVacation(vacationData);
+  };
 
   const onWeatherClick = (date) => {
     let convertedWeatherDate = new Date(date * 1000);
-    let month = convertedWeatherDate.getMonth() + 1
+    let month = convertedWeatherDate.getMonth() + 1;
     let day = convertedWeatherDate.getDate();
     let year = convertedWeatherDate.getFullYear();
     let shortWeatherDate = month + "/" + day + "/" + year;
-    setWeatherDate(shortWeatherDate)
-  }
-  
+    setWeatherDate(shortWeatherDate);
+  };
 
   return (
     <div>
       <Switch>
         <Route path="/myinfo/">
-          <MyInfo currentUser={currentUser} page={page}  allVacations={allVacations} />
+          <MyInfo
+            currentUser={currentUser}
+            page={page}
+            allVacations={allVacations}
+          />
         </Route>
         <Route path="/vacationdetails/">
           <VacationDetails 
@@ -90,10 +100,13 @@ export default function Content({
             onWeatherClick={onWeatherClick} 
             vacationData={newVacation} 
           />
-          {weatherDate 
-              ? <WeatherDetails currentUser={currentUser} page={page} weatherDate={weatherDate}/> 
-              : null
-          }
+          {weatherDate && (
+            <WeatherDetails
+              currentUser={currentUser}
+              page={page}
+              weatherDate={weatherDate}
+            />
+          )}
         </Route>
         <Route exact path="/">
           <Home
@@ -103,6 +116,7 @@ export default function Content({
             onForgotPasswordSubmit={onForgotPasswordSubmit}
             onIsUserNameAvailable={onIsUserNameAvailable}
             onAddUser={onAddUser}
+            onLogout={onLogout}
           />
         </Route>
         <Route path="*">
