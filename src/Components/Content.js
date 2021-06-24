@@ -50,13 +50,6 @@ export default function Content({
   }
 // console.log(new Date(selectedStartDate).getDate() + 3)
   const handleVacationSubmit = () => {
-    // let dateArray = []
-    // let currentDate = selectedStartDate
-    // while (currentDate <= selectedEndDate) {
-    //     dateArray.push(currentDate);
-    //     currentDate = currentDate.addDays(1);
-    // }
-    // setCalendarArray(dateArray)
     setNewVacation({
       start: selectedStartDate,
       end: selectedEndDate,
