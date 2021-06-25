@@ -50,15 +50,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function WeatherDetails({ currentUser, page, weatherDate }) {
-  const classes = useStyles();
-
+export default function WeatherDetails({ currentUser, page, weatherDate, vacationCity }) {
   const [forecastArray, setForecastArray] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(1624744800);
+  // const [selectedDate, setSelectedDate] = useState(1624744800);
+  const MONTHS = {
+    0: "January",
+    1: "February",
+    2: "March",
+    3: "April",
+    4: "May",
+    5: "June",
+    6: "July",
+    7: "August",
+    8: "September",
+    9: "October",
+    10: "November",
+    11: "December"
+  };
+  const classes = useStyles();
+  console.log(vacationCity)
+
 
   useEffect(() => {
     fetch(
-      "https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=honolulu&cnt=7&units=imperial&mode=JSON",
+      `https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=${vacationCity}&cnt=16&units=imperial&mode=JSON`,
       {
         method: "GET",
         headers: {
@@ -85,16 +100,23 @@ export default function WeatherDetails({ currentUser, page, weatherDate }) {
     forecastArray.filter((daily) => {
       const conditions = daily.weather[0].icon;
       const conditionsText = daily.weather[0].description;
-      const date = selectedDate;
+      const date = weatherDate;
       const srise = new Date(daily.sunrise * 1000);
       let riseHours = srise.getHours();
       let riseMinutes = "0" + srise.getMinutes();
       const sset = new Date(daily.sunset * 1000);
       let setHours = sset.getHours();
       let setMinutes = "0" + sset.getMinutes();
-      return daily.dt === date
+        let apiDate = new Date(daily.dt * 1000)
+        let month = apiDate.getMonth()+1
+        let day = apiDate.getDate();
+        let year = apiDate.getFullYear();
+        let shortStartDate = month + "/" + day + "/" + year;
+        // console.log(shortStartDate)
+        // console.log(weatherDate)
+      return shortStartDate === date
         ? (output = {
-            date: new Date(daily.dt * 1000).toString(),
+            date: MONTHS[apiDate.getMonth()] + " " + day + ", " + year,
             max: Math.round(daily.temp.max),
             min: Math.round(daily.temp.min),
             icon: (

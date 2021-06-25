@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { Box } from "@material-ui/core";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { addDays } from "date-fns";
-import { first } from "lodash";
+// import { addDays } from "date-fns";
+// import { first } from "lodash";
 
 // API Key from https://rapidapi.com/community/api/open-weather-map/
 // Sean's API key = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10"
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   date: {
     padding: theme.spacing(1),
-    height: "100px",
+    height: "80px",
     justifyContent: "flex-start",
     textAlign: "right",
     color: theme.palette.text.secondary,
@@ -40,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     borderTopLeftRadius: 0
   }
 }));
-// !! This function will replace the icon placeholders below in the FormRow component
 
 const DAYS_PER_WEEK = 7;
 const SECONDS_PER_DAY = 86400;
@@ -59,71 +57,84 @@ const MONTHS = {
   11: "December"
 };
 
-function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
+function VacationCalendar({ currentUser, page, vacationData, onWeatherClick}) {
   const classes = useStyles();
 
   const [forecastArray, setForecastArray] = useState([]);
   const [currentMonth, setCurrentMonth] = useState("");
   const [calendarFlipRemainder, setCalendarFlipRemainder] = useState(0);
 
-  //const d2 = new Date(vacationData?.end).getDate();
-  //const d1 = new Date(vacationData?.start).getTime();
-
   const city = vacationData.city
+  // console.log(city)
 
+
+  // this function generates an array of raw dates within the selected range
   let getDaysArray = function(start,end) {
     for (var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
       arr.push(new Date(dt));
     }
     return arr;
   }
-
-  let dateArray = getDaysArray(new Date(vacationData.start),new Date(vacationData.end));
-  console.log(forecastArray.slice(0,7));
-  console.log(forecastArray.slice(7,14));
-  console.log(forecastArray);
+  // this function maps all objects in array in converted date
+  let dateArray = getDaysArray(new Date(vacationData.start), new Date(vacationData.end));
+  // Thu Jun 24 2021 20:46:31 GMT-0500 (Central Daylight Time)
+  // console.log(dateArray)
+  let newDateArray = [];
+  dateArray.forEach(date => {
+    let convertedStartDate = new Date(date);
+    let month = convertedStartDate.getMonth() + 1;
+    let day = convertedStartDate.getDate();
+    let year = convertedStartDate.getFullYear();
+    let shortStartDate = month + "/" + day + "/" + year
+    newDateArray.push(shortStartDate)
+  })
+  // newDateArray = array of formatted dates from user input
+  // console.log(newDateArray)
+    // console.log(typeof shortStartDate)
+    // 6/25/2021 => string
 
   function leftPadWithEmptyObject(arr, seconds) {
     arr.unshift({ dt: seconds });
   }
 
   function buildForecastArray(forecast) {
+    // console.log(forecast)
     let firstDayOfWeek = new Date(forecast[0].dt * 1000).getDay();
     setCurrentMonth(new Date(forecast[0].dt * 1000).getMonth());
     let secondsInFirstDay = forecast[0].dt;
-    // console.log(firstDayOfWeek);
     while (firstDayOfWeek > 0) {
       secondsInFirstDay -= SECONDS_PER_DAY;
       leftPadWithEmptyObject(forecast, secondsInFirstDay);
       firstDayOfWeek--;
     }
+    // console.log(forecast)
 
-    // console.log(forecast);
     setForecastArray(forecast);
     setCalendarFlipRemainder(
       ((DAYS_PER_WEEK - 1) * SECONDS_PER_DAY + forecast[0].dt) %
         (SECONDS_PER_DAY * DAYS_PER_WEEK)
     );
   }
-  function isEndOfWeek(seconds) {
-    return (
-      seconds % (SECONDS_PER_DAY * DAYS_PER_WEEK) === calendarFlipRemainder
-    );
-  }
+  // function isEndOfWeek(seconds) {
+  //   return (
+  //     seconds % (SECONDS_PER_DAY * DAYS_PER_WEEK) === calendarFlipRemainder
+  //   );
+  // }
 
-  function addCalendarPadding() {
-    return (
-      <>
-        {/* You MUST do this in two steps */}
-        <Grid item xs={3}></Grid>
-        <Grid item xs={2}></Grid>
-      </>
-    );
-  }
+  // function addCalendarPadding() {
+  //   return (
+  //     <>
+  //       {/* You MUST do this in two steps */}
+  //       <Grid item xs={3}></Grid>
+  //       <Grid item xs={2}></Grid>
+  //     </>
+  //   );
+  // }
 
+  //filter dt to match dateArray
   useEffect(() => {
     fetch(
-      `https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=${city}&cnt=${dateArray.length}&units=imperial&mode=JSON`,
+      `https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=${city}&cnt=${dateArray.length+1}&units=imperial&mode=JSON`,
       {
         method: "GET",
         headers: {
@@ -134,10 +145,9 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
     )
       .then((response) => response.json())
       .then((data) => buildForecastArray(data.list));
-  }, [city]);
+  }, []);
 
   function HeaderRow() {
-    console.log(calendarFlipRemainder);
     return (
       <Container>
         <Grid
@@ -196,22 +206,25 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
             spacing={0}
             direction="row"
           >
-            {/* 2 empty columns to push calendar to the right*/}
             <Grid item xs={2}></Grid>
               {forecastArray.slice(0,7).map((daily) => {
                 const conditions = daily.weather && daily.weather[0].icon;
-                const firstDay = forecastArray[0].dt;
+                let date = new Date(daily.dt * 1000)
+                let month = date.getMonth()+1
+                let day = date.getDate();
+                let year = date.getFullYear();
+                let shortStartDate = month + "/" + day + "/" + year;
                 return (
                   <Grid key={daily.dt} item xs={1}>
                     <Paper className={classes.date}>
-                      {new Date(daily.dt * 1000).getDate()}
+                      {day}
                     </Paper>
                     <Paper key={daily.dt} className={classes.weather} onClick={() => onWeatherClick(daily.dt)}>
                       <div className="weather-elements">
                         <span className="temp-number">
                           {daily.temp
                             ? `${Math.round(daily.temp.day)}°`
-                            : "no data"}
+                            : null}
                         </span>
                         {conditions && (
                           <img
@@ -240,11 +253,10 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
             spacing={0}
             direction="row"
           >
-            {/* 2 empty columns to push calendar to the right*/}
             <Grid item xs={2}></Grid>
               {forecastArray.slice(7,14).map((daily) => {
                 const conditions = daily.weather && daily.weather[0].icon;
-                const firstDay = forecastArray[0].dt;
+                // const firstDay = forecastArray[0].dt;
                 return (
                   <Grid key={daily.dt} item xs={1}>
                     <Paper className={classes.date}>
@@ -284,11 +296,10 @@ function VacationCalendar({ currentUser, page, vacationData, onWeatherClick }) {
             spacing={0}
             direction="row"
           >
-            {/* 2 empty columns to push calendar to the right*/}
             <Grid item xs={2}></Grid>
               {forecastArray.slice(14,21).map((daily) => {
                 const conditions = daily.weather && daily.weather[0].icon;
-                const firstDay = forecastArray[0].dt;
+                // const firstDay = forecastArray[0].dt;
                 return (
                   <Grid key={daily.dt} item xs={1}>
                     <Paper className={classes.date}>
