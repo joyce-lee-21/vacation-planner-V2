@@ -53,36 +53,36 @@
     {
       "id": 1,
       "userId": 1,
-      "startDate": "10/1/2021",
-      "endDate": "10/8/2021",
+      "startDate": "7/1/2021",
+      "endDate": "7/8/2021",
       "city": "Los Angeles, CA"
     },
     {
       "id": 2,
       "userId": 1,
-      "startDate": "10/1/2021",
-      "endDate": "10/8/2021",
+      "startDate": "7/1/2021",
+      "endDate": "7/8/2021",
       "city": "Las Vegas, NV"
     },
     {
       "id": 3,
       "userId": 2,
-      "startDate": "10/1/2021",
-      "endDate": "10/8/2021",
+      "startDate": "7/1/2021",
+      "endDate": "7/8/2021",
       "city": "Washington, DC"
     },
     {
       "id": 4,
       "userId": 2,
-      "startDate": "10/1/2021",
-      "endDate": "10/8/2021",
+      "startDate": "7/1/2021",
+      "endDate": "7/8/2021",
       "city": "New York City, NY"
     },
     {
       "id": 5,
       "userId": 3,
-      "startDate": "10/1/2021",
-      "endDate": "10/8/2021",
+      "startDate": "7/1/2021",
+      "endDate": "7/8/2021",
       "city": "Honolulu, HI"
     }
   ]

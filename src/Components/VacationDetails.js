@@ -15,12 +15,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function VacationDetails({
+export default function VacationDetail({
+  selectedStartDate,
+  selectedEndDate,
+  vacationCity,
   onSelectedStartDate,
   onSelectedEndDate,
   onNewVacation,
-  onVacationSubmit,
-  currentUser
+  onVacationSubmit
 }) {
   const handleStartDateChange = (e) => {
     onSelectedStartDate(e);
@@ -31,6 +33,7 @@ export default function VacationDetails({
   };
 
   const handleVacationInput = (e) => {
+    e.preventDefault();
     onNewVacation(e.target.value);
   };
 
@@ -49,7 +52,10 @@ export default function VacationDetails({
               margin="normal"
               id="startdate-picker-inline"
               label="Start Date"
+              value={selectedStartDate}
               onChange={handleStartDateChange}
+              minDate={new Date()}
+              maxDate={new Date(Date.now() + 16 * 24 * 60 * 60 * 1000)}
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
@@ -73,7 +79,11 @@ export default function VacationDetails({
               margin="normal"
               id="enddate-picker-inline"
               label="End Date"
+              value={selectedEndDate}
               onChange={handleEndDateChange}
+              minDate={new Date()}
+              maxDate={new Date(Date.now() + 16 * 24 * 60 * 60 * 1000)}
+              maxDateMessage="Forecast of 16 days max allowed."
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
@@ -97,6 +107,7 @@ export default function VacationDetails({
             name="vacation-city"
             size="40"
             placeholder="City, State, Country"
+            value={vacationCity}
             onChange={handleVacationInput}
           />
         </Grid>

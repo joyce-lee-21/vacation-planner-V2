@@ -20,9 +20,9 @@ export default function Content({
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
   const [calendarArray, setCalendarArray] = useState([])
   const [vacationCity, setVacationCity] = useState("New York, NY, USA")
-  const [newVacation, setNewVacation] = useState({
-    start: new Date(),
-    end: new Date(),
+  const [vacation, setVacation] = useState({
+    start: selectedStartDate,
+    end: selectedEndDate,
     city: vacationCity
   })
   const [weatherDate, setWeatherDate] = useState("")
@@ -34,6 +34,8 @@ export default function Content({
     let day = convertedStartDate.getDate();
     let year = convertedStartDate.getFullYear();
     let shortStartDate = month + "/" + day + "/" + year;
+    // console.log(typeof shortStartDate)
+    // 6/25/2021 => string
     setSelectedStartDate(shortStartDate);
   };
   const onSelectedEndDate = (date) => {
@@ -50,12 +52,24 @@ export default function Content({
   }
 // console.log(new Date(selectedStartDate).getDate() + 3)
   const handleVacationSubmit = () => {
-    setNewVacation({
+    setVacation({
       start: selectedStartDate,
       end: selectedEndDate,
       city: vacationCity
     })
   };
+
+  const onVacationSelect = (vac) => {
+    let city = vac.city
+    setVacation({
+      // console.log(vac.city.charAt(0))
+      start: vac.startDate,
+      end: vac.endDate,
+      city: vac.city.split(" ")[0]
+    })
+  }
+
+
 
   const onWeatherClick = (date) => {
     let convertedWeatherDate = new Date(date * 1000);
@@ -74,6 +88,7 @@ export default function Content({
             currentUser={currentUser}
             page={page}
             allVacations={allVacations}
+            onVacationSelect={onVacationSelect}
           />
         </Route>
         <Route path="/vacationdetails/">
@@ -94,7 +109,7 @@ export default function Content({
             currentUser={currentUser} 
             page={page} 
             onWeatherClick={onWeatherClick} 
-            vacationData={newVacation} 
+            vacationData={vacation} 
             calendarArray={calendarArray}
           />
           {weatherDate && (
@@ -102,6 +117,7 @@ export default function Content({
               currentUser={currentUser}
               page={page}
               weatherDate={weatherDate}
+              vacationCity={vacationCity}
             />
           )}
         </Route>

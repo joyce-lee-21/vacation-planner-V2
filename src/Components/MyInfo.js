@@ -1,16 +1,21 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 
-export default function MyInfo({ currentUser, allVacations }) {
+export default function MyInfo({ currentUser, allVacations, onVacationSelect }) {
   const [showPassword, toggleShowPassWord] = useState(false);
 
-  console.log(currentUser);
-  console.log(allVacations);
+  // console.log(currentUser);
+  // console.log(allVacations);
   function handleShowPasswordClick() {
     toggleShowPassWord(!showPassword);
   }
   const displayedVacations = allVacations?.filter(
     (vac) => vac.userId === currentUser?.id
   );
+
+  const handleVacationSelect = (vac) => {
+    onVacationSelect(vac)
+  }
   return (
     <>
       <div>
@@ -19,7 +24,11 @@ export default function MyInfo({ currentUser, allVacations }) {
       {currentUser && <h3>Vacations Saved</h3>}
       <ul>
         {displayedVacations?.map((vac) => (
-          <li key={vac.id}>{vac.city}</li>
+          <>
+          <Link to="/vacationcalendar" style={{ textDecoration: "none" }}>
+            <li key={vac.id} onClick={() => handleVacationSelect(vac)}>{vac.city}</li>
+          </Link>
+          </>
         ))}
       </ul>
       <ul>
