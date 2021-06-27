@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 
-const API_KEY = "b288f1ae8dmshb2230bda90da38bp154b42jsneff76a56ba64";
+const API_KEY = "";
 
 // To render this component properly with updated data from db.json:
 // 1. insert your API KEY above

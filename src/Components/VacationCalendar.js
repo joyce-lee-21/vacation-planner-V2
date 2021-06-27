@@ -7,9 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 // import { first } from "lodash";
 
 // API Key from https://rapidapi.com/community/api/open-weather-map/
-// Sean's API key = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10"
 
-const API_KEY = "0629feec2bmsh3ef7f3d86a812b3p127915jsna97cfce97a10";
+const API_KEY = "";
 const API_HOST = "community-open-weather-map.p.rapidapi.com";
 
 const useStyles = makeStyles((theme) => ({
